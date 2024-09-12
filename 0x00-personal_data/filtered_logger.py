@@ -14,4 +14,5 @@ def filter_datum(fields: List[str],
     """ return the logs message obfuscated """
     pattern = r'({})([^{}]+)'.format("|".join(fields), seperator)
     repls = r'\1={}'.format(redaction)
-    return re.sub(pattern, repls, message)
+    message = re.sub(pattern, repls, message)
+    return message
