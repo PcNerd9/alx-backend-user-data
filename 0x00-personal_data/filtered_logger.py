@@ -7,10 +7,14 @@ import re
 from typing import List
 
 
-def filter_datum(fields: List[str],
-                 redaction: str,
-                 message: str,
-                 seperator: str) -> str:
-    """ return the logs message obfuscated """
-    pattern = f"({'|'.join(fields)})=([^ {separator}]+)"
-    return re.sub(pattern, lambda m: f"{m.group(1)}={redaction}", message)
+def filter_datum(
+    fields: List[str], redaction: str,
+    message: str, separator: str
+) -> str:
+    """
+    Filters message by replacing each value in fields with redaction
+    """
+    for key in fields:
+        pattern = r'({0}=)[^{1}]*({1})'.format(key, separator)
+        message = re.sub(pattern, r'\1{}\2'.format(redaction), message)
+    return message
