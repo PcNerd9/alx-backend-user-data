@@ -12,5 +12,7 @@ def filter_datum(fields: List[str],
                  message: str,
                  seperator: str) -> str:
     """ return the logs message obfuscated """
-    pattern = f"({'|'.join(fields)})=([^ {separator}]+)"
-    return re.sub(pattern, lambda m: f"{m.group(1)}={redaction}", message)
+    pattern = r'({})([^{}]+)'.format("|".join(fields), seperator)
+    repls = r'\1={}'.format(redaction)
+    message = re.sub(pattern, repls, message)
+    return message
