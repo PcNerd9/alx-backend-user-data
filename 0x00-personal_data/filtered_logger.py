@@ -8,7 +8,7 @@ from mysql import connector
 from mysql.connector.connection import MySQLConnection
 import os
 import re
-from typing import List, Sequence
+from typing import List, Sequence, Union
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -32,7 +32,7 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPERATOR = ";"
 
-    def __init__(self, fields: Sequence[str]):
+    def __init__(self, fields: Union[List[str], tuple[str]):
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
