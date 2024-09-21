@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+"""
+Contains a class for the api authentication
+"""
+from flask import request
+import os
+from typing import List, TypeVar
+
+
+class Auth:
+    """
+    Class to manage the api authentication
+    """
+
+    def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
+        """
+        returns True if the path is not in the list of strings excluded_path
+        """
+        if path is None:
+            return True
+        if excluded_paths is None or len(excluded_paths) == 0:
+            return True
+        for ex_path in excluded_paths:
+            if ex_path[-1] == "*":
+                if path.startswith(ex_path[:-1]):
+                    return False
+            if path == ex_path or f"{path}/" == ex_path:
+                return False
+        return True
+
+    def authorization_header(self, request=None) -> str:
+        """
+        validate all requests to secure the API
+        """
+
+        if request is None:
+            return None
+        auth_header = request.headers.get("Authorization")
+        if auth_header is None:
+            return None
+        return auth_header
+
+    def current_user(self, request=None) -> TypeVar("User"):
+        """
+        return the current user logged in user
+        """
+        return None
+
+    def session_cookie(self, request=None):
+        """
+        returns a cookie value from a request
+        """
+
+        if request is None:
+            return None
+        cookie_name = os.getenv("SESSION_NAME")
+        if cookie_name is None:
+            return None
+        return request.cookies.get(cookie_name)
