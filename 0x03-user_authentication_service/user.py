@@ -11,6 +11,10 @@ Base = declarative_base()
 
 
 class User(Base):
+    """
+    The User model to be mapped to the users table
+    in the database
+    """
 
     __tablename__ = "users"
 
