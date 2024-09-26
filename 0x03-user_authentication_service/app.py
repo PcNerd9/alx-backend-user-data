@@ -129,7 +129,7 @@ def update_password():
         abort(403)
     else:
         return jsonify({
-            "email": email,
+            "email": user_email,
             "message": "Password updated"
             }), 200
 
