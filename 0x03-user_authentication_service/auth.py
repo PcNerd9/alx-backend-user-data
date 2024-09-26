@@ -12,10 +12,9 @@ from uuid import uuid4
 
 
 def _hash_password(password: str) -> bytes:
+    """Encrypts a password
     """
-    hash the password string
-    """
-    return bcrypt.hashpw(password.encode("UTF-8"), bcrypt.gensalt())
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
 
 def _generate_uuid() -> str:
